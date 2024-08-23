@@ -16,7 +16,11 @@ export class DataServiceService {
     return this.http.get<any>(Endpoints.PRODUCTS.GET_PRODUCTS);
   }
 
-  postLogin(body:any): Observable<any>{
-    return this.http.post<any>(Endpoints.LOGIN.VALIDATE_CREDENTIALS, body);
+  setLogin(body:any): Observable<any>{
+    return this.http.post<any>(Endpoints.LOGIN.VALIDATE_CREDENTIALS, {data:body});
+  }
+
+  getUsers(): Observable<any>{
+    return this.http.get<any>(Endpoints.USERS.GET_USERS);
   }
 }

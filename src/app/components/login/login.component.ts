@@ -3,8 +3,9 @@ import { DataServiceService } from '../../services/data-service.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { BADLOGIN, BADPASS, BADUSR, SUCCES } from '../../const/loginReq';
+import { BADLOGIN, BADPASS, BADUSR, SECRET_KEY, SUCCES } from '../../const/loginReq';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -28,19 +29,26 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  encryptData(data: any, secretKey: string): string {
+    const dataString = JSON.stringify(data);
+    const encrypted = CryptoJS.AES.encrypt(dataString, secretKey).toString();
+    return encrypted;
+  }
+
   login(){
+    const secretKey = SECRET_KEY;
     this.messageUsrWrong = false;
     this.messagePassWrong = false;
     let body = {
       "userName": this.fullName,
       "password": this.password
     };
-    this.loginSub = this.dataService.postLogin(body).subscribe({
+    const encryptedData = this.encryptData(body, secretKey);
+    this.loginSub = this.dataService.setLogin(encryptedData).subscribe({
       next: (data:any)=>{
         console.log(data);
         switch(data.body){
           case SUCCES:
-            console.log("has ingresado con éxito");
             this.router.navigate(['/home']);
             break;
           case BADUSR:

@@ -11,4 +11,7 @@ export class Endpoints {
     public static LOGIN = {
         VALIDATE_CREDENTIALS: `${environment.host}login`
     };
+    public static USERS = {
+        GET_USERS: `${environment.host}users-admin`
+    };
 }
