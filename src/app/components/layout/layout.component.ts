@@ -1,16 +1,22 @@
-import { Component } from '@angular/core';
-import { HomeAdminComponent } from '../home-admin/home-admin.component';
-import { FooterComponent } from '../footer/footer.component';
-import { HeaderComponent } from '../header/header.component';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, HomeAdminComponent],
+  imports: [RouterOutlet],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnInit {
+
+  constructor(
+    protected readonly router: Router,
+    protected readonly route: ActivatedRoute
+  ){}
+
+  ngOnInit(): void {
+    // this.router.navigate(['/home/shopping']);
+  }
 
 }
