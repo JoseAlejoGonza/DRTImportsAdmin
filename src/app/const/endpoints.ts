@@ -3,9 +3,9 @@ import { environment } from "./environments";
 export class Endpoints {
     public static PRODUCTS = {
         GET_PRODUCTS: `${environment.host}products`,
-        GET_CATEGORIES: `${environment.host}list-categories`,
-        GET_CATEGORY: (categoryID: number | undefined) => {
-            return `${environment.host}category/${categoryID}`
+        GET_CATEGORIES: `${environment.host}list-category`,
+        GET_SUBCATEGORY: (categoryID: number | undefined) => {
+            return `${environment.host}list-subcategory/${categoryID}`
         }            
     };
     public static LOGIN = {

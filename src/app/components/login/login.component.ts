@@ -46,10 +46,9 @@ export class LoginComponent implements OnInit {
     const encryptedData = this.encryptData(body, secretKey);
     this.loginSub = this.dataService.setLogin(encryptedData).subscribe({
       next: (data:any)=>{
-        console.log(data);
         switch(data.body){
           case SUCCES:
-            this.router.navigate(['/home']);
+            this.router.navigate(['home']);
             break;
           case BADUSR:
             this.password = "";

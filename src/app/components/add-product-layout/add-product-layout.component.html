@@ -1,57 +1,86 @@
-
-
-<!-- <div class="flex h-dvh rounded bg-gray-50 dark:bg-gray-800 w-auto text-gray-500 pt-16 pl-3"> -->
-    
 <ol class="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base pt-16 pl-3 pr-3">
-    <li [class.active]="currentStep === 1" class="flex md:w-full items-center text-blue-600 dark:text-blue-500 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
-        <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-            </svg>
-            Personal <span class="hidden sm:inline-flex sm:ms-2">Info</span>
+    <li class="flex md:w-full items-center sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
+        <span *ngIf="currentStep == 1" class="text-blue-600 dark:text-blue-500">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <span class="me-2">1</span>
+                Seleccionar <span class="hidden sm:inline-flex sm:ms-2">Categoría</span>
+            </span>
+        </span>
+        <span *ngIf="currentStep > 1" class="text-blue-600 dark:text-blue-500">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <fa-icon *ngIf="currentStep>1" [icon]="faCircleCheck" [ngClass]="'fa-ls'"></fa-icon>
+                Seleccionar <span class="hidden sm:inline-flex sm:ms-2">Categoría</span>
+            </span>
         </span>
     </li>
     <li class="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
-        <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-            <span class="me-2">2</span>
-            Account <span class="hidden sm:inline-flex sm:ms-2">Info</span>
+        <span *ngIf="currentStep < 2">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <span class="me-2">2</span>
+                Información <span class="hidden sm:inline-flex sm:ms-2">general</span>
+            </span>
+        </span>
+        <span *ngIf="currentStep == 2" class="text-blue-600 dark:text-blue-500">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <span class="me-2">2</span>
+                Información <span class="hidden sm:inline-flex sm:ms-2">general</span>
+            </span>
+        </span>
+        <span *ngIf="currentStep > 2" class="text-blue-600 dark:text-blue-500">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <fa-icon *ngIf="currentStep>1" [icon]="faCircleCheck" [ngClass]="'fa-ls'"></fa-icon>
+                Información <span class="hidden sm:inline-flex sm:ms-2">general</span>
+            </span>
         </span>
     </li>
     <li class="flex items-center">
-        <span class="me-2">3</span>
-        Confirmation
+        <span *ngIf="currentStep < 3 && isSaved == false">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <span class="me-2">3</span>
+                Confirmación
+            </span>
+        </span>
+        <span *ngIf="currentStep == 3 && isSaved == false" class="text-blue-600 dark:text-blue-500">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <span class="me-2">3</span>
+                Confirmación
+            </span>
+        </span>
+        <span *ngIf="isSaved == true" class="text-blue-600 dark:text-blue-500">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <fa-icon [icon]="faCircleCheck" [ngClass]="'fa-ls'"></fa-icon>
+                Confirmación
+            </span>
+        </span>
     </li>
 </ol>
 
-<div *ngIf="currentStep === 1">
-    <form (ngSubmit)="nextStep(currentStep)">
-        <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Invoice details</h3>
+<div *ngIf="currentStep === 1" class="pl-3 pr-3">
+        <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Seleccione una categoría</h3>
         <div class="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
-                <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username.example" required="">
+                <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                    <option selected="">Seleccione categoría</option>
+                    <option *ngFor="let category of categories" value="category.category_name">{{ category.category_name }}</option>
+                    <option>Agregar una categoría</option>
+                </select>
             </div>
-            <!-- <div>
-                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
-            </div> -->
             <div>
                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                 <input type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required="">
-            </div>                        
-            <!-- <div>
-                <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                <input type="password" name="confirm-password" id="confirm-password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required="">
-            </div> -->
+            </div>
         </div>
-        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Next Step: Payment Info
-        </button>
-    </form>
+        <div class="flex gap-4 mb-4 sm:grid-cols-2">
+            <div class="gap-4 mb-4 sm:grid-cols-2 ml-auto">
+                <button (click)="nextStep(currentStep)" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Siguiente <fa-icon [icon]="faGreaterThan" [ngClass]="'fa-lg'"></fa-icon>
+                </button>
+            </div>
+        </div>
 </div>
 
-<div *ngIf="currentStep === 2">
-    <form action="nextStep(currentStep)">
+<div *ngIf="currentStep === 2" class="pl-3 pr-3">
         <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Invoice details 2</h3>
         <div class="grid gap-4 mb-4 sm:grid-cols-2">
             <div>
@@ -70,12 +99,56 @@
                 <input type="password" name="confirm-password" id="confirm-password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required="">
             </div>
         </div>
-        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Next Step: Payment Info2
-        </button>
-    </form>
+        <div class="flex gap-4 mb-4 sm:grid-cols-2">
+            <div class="gap-4 mb-4 sm:grid-cols-2">
+                <button (click)="prevStep(currentStep)" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <fa-icon [icon]="faLessThan" [ngClass]="'fa-lg'"></fa-icon> Anterior
+                </button>
+            </div>
+            <div class="gap-4 mb-4 sm:grid-cols-2 ml-auto">
+                <button (click)="nextStep(currentStep)" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Siguiente <fa-icon [icon]="faGreaterThan" [ngClass]="'fa-lg'"></fa-icon>
+                </button>
+            </div>
+        </div>
 </div>
 
-
+<div *ngIf="currentStep === 3" class="pl-3 pr-3">
+        <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Invoice details 3</h3>
+        <div class="grid gap-4 mb-4 sm:grid-cols-2">
+            <div>
+                <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username 2</label>
+                <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username.example" required="">
+            </div>
+            <div>
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email 2</label>
+                <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+            </div>
+            <div>
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password 2</label>
+                <input type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required="">
+            </div>                        <div>
+                <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password 2</label>
+                <input type="password" name="confirm-password" id="confirm-password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required="">
+            </div>
+        </div>
+        <div class="flex gap-4 mb-4 sm:grid-cols-2">
+            <div *ngIf="isSaved == false" class="gap-4 mb-4 sm:grid-cols-2">
+                <button (click)="prevStep(currentStep)" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <fa-icon [icon]="faLessThan" [ngClass]="'fa-lg'"></fa-icon> Anterior
+                </button>
+            </div>
+            <div *ngIf="isSaved == false" class="gap-4 mb-4 sm:grid-cols-2 ml-auto">
+                <button (click)="saveProduct(currentStep)" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Guardar producto
+                </button>
+            </div>
+            <div *ngIf="isSaved == true" class="gap-4 mb-4 sm:grid-cols-2 ml-auto">
+                <button (click)="goFirstStep()" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Volver
+                </button>
+            </div>
+        </div>
+</div>
 
 <router-outlet></router-outlet>
