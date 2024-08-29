@@ -5,11 +5,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleCheck, faLessThan, faGreaterThan, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { ProductServiceService } from '../../services/product-service.service';
 import { Subscription } from 'rxjs';
+import { CreateStepOneComponent } from '../products/create-step-one/create-step-one.component';
 
 @Component({
   selector: 'app-add-product-layout',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, FontAwesomeModule],
+  imports: [RouterOutlet, CommonModule, FontAwesomeModule, CreateStepOneComponent],
   templateUrl: './add-product-layout.component.html',
   styleUrl: './add-product-layout.component.scss'
 })
@@ -27,18 +28,18 @@ export class AddProductLayoutComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-      this.prodsSub = this.productService.getCategory().subscribe({
-        next: (data:any)=>{
-          console.log(data);
-          this.categories = data;
-        },
-        error: (err:any)=>{
-          console.log(err);
-        },
-        complete:()=>{
-          console.log("Complete");
-        }
-      })
+      // this.prodsSub = this.productService.getCategory().subscribe({
+      //   next: (data:any)=>{
+      //     console.log(data);
+      //     this.categories = data;
+      //   },
+      //   error: (err:any)=>{
+      //     console.log(err);
+      //   },
+      //   complete:()=>{
+      //     console.log("Complete");
+      //   }
+      // })
   }
 
   nextStep(step:number){

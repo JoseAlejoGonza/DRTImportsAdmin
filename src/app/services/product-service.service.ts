@@ -21,6 +21,10 @@ export class ProductServiceService {
   }
 
   setCategory(body:any): Observable<any>{
-    return this.http.post<any>(Endpoints.LOGIN.VALIDATE_CREDENTIALS, {data:body});
+    return this.http.post<any>(Endpoints.PRODUCTS.SET_CATEGORY, {data:body});
+  }
+
+  setSubcategory(body:any): Observable<any>{
+    return this.http.post<any>(Endpoints.PRODUCTS.SET_SUBCATEGORY, {data:body});
   }
 }
