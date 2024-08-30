@@ -1,0 +1,134 @@
+<div class="container">
+    <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Información del producto</h3>
+    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+        <div>
+            <label for="productName" [ngClass]="classLabel">Nombre del producto</label>
+            <input type="text" name="productName" id="productName"
+            [ngClass]="classInput"
+            placeholder="Nombre del producto" 
+            [(ngModel)]="productName"
+            (input)="onProductNameChange()">
+            <span *ngIf="nameInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+        <div>
+            <label for="productDescription" [ngClass]="classLabel">Descripción del producto</label>
+            <input type="text" name="productDescription" id="productDescription"
+            [ngClass]="classInput"
+            placeholder="Descripción del producto"
+            [(ngModel)]="productDescription"
+            (input)="onDescriptionNameChange()">
+            <span *ngIf="descriptionInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+        <div>
+            <label for="productSlug" [ngClass]="classLabel">Slug</label>
+            <input type="text" name="productSlug" id="productSlug"
+            [ngClass]="classInput"
+            placeholder="Slug del producto ej(mouse-gamer-rgb...)" 
+            [(ngModel)]="productSlug"
+            (input)="onDescriptionNameChange()">
+            <span *ngIf="descriptionInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+        <div>
+            <label for="productCodeBar" [ngClass]="classLabel">Código de barras</label>
+            <input type="number" name="productCodeBar" id="productCodeBar"
+            [ngClass]="classInput"
+            placeholder="Código de barras ej(123456...)" 
+            [(ngModel)]="productCodeBar"
+            (input)="onDescriptionNameChange()">
+            <span *ngIf="descriptionInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+        <div>
+            <label for="productQuantity" [ngClass]="classLabel">Cantidad de unidades a agregar</label>
+            <input type="number" name="productQuantity" id="productQuantity"
+            [ngClass]="classInput"
+            placeholder="Cantidad de productos ej(123456...)" 
+            [(ngModel)]="productQuantity"
+            (input)="onDescriptionNameChange()">
+            <span *ngIf="descriptionInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+    </div>
+    <div class="border-t-4 border-secondaryGray pb-6"></div>
+    <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Precio del producto</h3>
+    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+        <div>
+            <label for="productPrice" [ngClass]="classLabel">Precio $</label>
+            <input type="number" name="productPrice" id="productPrice"
+            [ngClass]="classInput"
+            placeholder="Precio del producto"
+            [(ngModel)]="productPrice"
+            (input)="onDescriptionNameChange()"> 
+            <span *ngIf="descriptionInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+        <div>
+            <label for="productPercent" [ngClass]="classLabel">Porcentaje de descuento</label>
+            <input type="number" name="productPercent" id="productPercent"
+            [ngClass]="classInput"
+            placeholder="Porcentaje de descuento ej(0-100)" 
+            [(ngModel)]="productPercent"
+            (input)="onDescriptionNameChange()">
+            <span *ngIf="descriptionInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+    </div>
+    <div class="border-t-4 border-secondaryGray pb-6"></div>
+    <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">URLs de las imágenes</h3>
+    <div class="grid gap-4 mb-4 sm:grid-cols-1">
+        <div>
+            <label for="productName" [ngClass]="classLabel">Imagen para la portada</label>
+            <input type="text" name="productName" id="productName"
+            [ngClass]="classInput"
+            placeholder="Nombre de la categoría" 
+            [(ngModel)]="productName"
+            (input)="onProductNameChange()">
+            <span *ngIf="nameInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+        <div>
+            <label for="productDescription" [ngClass]="classLabel">Segunda imagen</label>
+            <input type="text" name="productDescription" id="productDescription"
+            [ngClass]="classInput"
+            placeholder="Nombre de la categoría" 
+            [(ngModel)]="productDescription"
+            (input)="onDescriptionNameChange()">
+            <span *ngIf="descriptionInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+        <div>
+            <label for="productDescription" [ngClass]="classLabel">Tercera imagen</label>
+            <input type="text" name="productDescription" id="productDescription"
+            [ngClass]="classInput"
+            placeholder="Nombre de la categoría" 
+            [(ngModel)]="productDescription"
+            (input)="onDescriptionNameChange()">
+            <span *ngIf="descriptionInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+        <div>
+            <label for="productDescription" [ngClass]="classLabel">Cuarta imagen</label>
+            <input type="text" name="productDescription" id="productDescription"
+            [ngClass]="classInput"
+            placeholder="Nombre de la categoría" 
+            [(ngModel)]="productDescription"
+            (input)="onDescriptionNameChange()">
+            <span *ngIf="descriptionInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+        <div>
+            <label for="productDescription" [ngClass]="classLabel">Quinta imagen</label>
+            <input type="text" name="productDescription" id="productDescription"
+            [ngClass]="classInput"
+            placeholder="Nombre de la categoría" 
+            [(ngModel)]="productDescription"
+            (input)="onDescriptionNameChange()">
+            <span *ngIf="descriptionInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+    </div>
+    <div class="border-t-4 border-secondaryGray pb-6"></div>
+    <div class="flex gap-4 mb-4 sm:grid-cols-2">
+        <div class="gap-4 mb-4 sm:grid-cols-2">
+            <button (click)="prevStep()" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <fa-icon [icon]="faLessThan" [ngClass]="'fa-lg'"></fa-icon> Anterior
+            </button>
+        </div>
+        <div class="gap-4 mb-4 sm:grid-cols-2 ml-auto">
+            <button (click)="nextStep()" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Siguiente <fa-icon [icon]="faGreaterThan" [ngClass]="'fa-lg'"></fa-icon>
+            </button>
+        </div>
+    </div>
+</div>

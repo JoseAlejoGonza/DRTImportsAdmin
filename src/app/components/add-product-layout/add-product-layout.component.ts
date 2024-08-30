@@ -6,11 +6,13 @@ import { faCircleCheck, faLessThan, faGreaterThan, IconDefinition } from '@forta
 import { ProductServiceService } from '../../services/product-service.service';
 import { Subscription } from 'rxjs';
 import { CreateStepOneComponent } from '../products/create-step-one/create-step-one.component';
+import { CategoryInfo } from '../../models/cotegoryInfo.model';
+import { CreateStepTwoComponent } from '../products/create-step-two/create-step-two.component';
 
 @Component({
   selector: 'app-add-product-layout',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, FontAwesomeModule, CreateStepOneComponent],
+  imports: [RouterOutlet, CommonModule, FontAwesomeModule, CreateStepOneComponent, CreateStepTwoComponent],
   templateUrl: './add-product-layout.component.html',
   styleUrl: './add-product-layout.component.scss'
 })
@@ -22,6 +24,7 @@ export class AddProductLayoutComponent implements OnInit {
   isSaved: boolean = false;
   currentStep: number = 1;
   categories:Array<any> = [];
+  catAndSubcatInfo: CategoryInfo | undefined;
 
   constructor(
     private productService: ProductServiceService
@@ -43,8 +46,11 @@ export class AddProductLayoutComponent implements OnInit {
   }
 
   nextStep(step:number){
-    console.log(step)
     this.currentStep = step+1;
+  }
+
+  categoryInfo(info:CategoryInfo){
+    this.catAndSubcatInfo = info;
   }
 
   prevStep(step:number){
