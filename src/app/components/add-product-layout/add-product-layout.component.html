@@ -60,45 +60,11 @@
 </div>
 
 <div *ngIf="currentStep === 2" class="pl-3 pr-3">
-       <app-create-step-two [step]="currentStep" [categoryInfo]="catAndSubcatInfo" ></app-create-step-two>
+       <app-create-step-two [step]="currentStep" [categoryInfo]="catAndSubcatInfo" [productInfoToEdit]="productInfoToEdit" (productInfo)="productInfo($event)" (nextStep)="nextStep($event)" (prevStep)="prevStep($event)"></app-create-step-two>
 </div>
 
 <div *ngIf="currentStep === 3" class="pl-3 pr-3">
-        <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Invoice details 3</h3>
-        <div class="grid gap-4 mb-4 sm:grid-cols-2">
-            <div>
-                <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username 2</label>
-                <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="username.example" required="">
-            </div>
-            <div>
-                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email 2</label>
-                <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
-            </div>
-            <div>
-                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password 2</label>
-                <input type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required="">
-            </div>                        <div>
-                <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password 2</label>
-                <input type="password" name="confirm-password" id="confirm-password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required="">
-            </div>
-        </div>
-        <div class="flex gap-4 mb-4 sm:grid-cols-2">
-            <div *ngIf="isSaved == false" class="gap-4 mb-4 sm:grid-cols-2">
-                <button (click)="prevStep(currentStep)" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    <fa-icon [icon]="faLessThan" [ngClass]="'fa-lg'"></fa-icon> Anterior
-                </button>
-            </div>
-            <div *ngIf="isSaved == false" class="gap-4 mb-4 sm:grid-cols-2 ml-auto">
-                <button (click)="saveProduct(currentStep)" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Guardar producto
-                </button>
-            </div>
-            <div *ngIf="isSaved == true" class="gap-4 mb-4 sm:grid-cols-2 ml-auto">
-                <button (click)="goFirstStep()" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Volver
-                </button>
-            </div>
-        </div>
+    <app-create-step-three [step]="currentStep" [productInfo]="infoProductToSave" (infoToEdit)="prevInfo($event)" (prevStep)="prevStep($event)" (goToFirstStep)="nextStep($event)"></app-create-step-three>
 </div>
 
 <router-outlet></router-outlet>

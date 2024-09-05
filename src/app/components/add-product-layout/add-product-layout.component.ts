@@ -8,11 +8,13 @@ import { Subscription } from 'rxjs';
 import { CreateStepOneComponent } from '../products/create-step-one/create-step-one.component';
 import { CategoryInfo } from '../../models/cotegoryInfo.model';
 import { CreateStepTwoComponent } from '../products/create-step-two/create-step-two.component';
+import { ProductInfo } from '../../models/productInfo.model';
+import { CreateStepThreeComponent } from '../products/create-step-three/create-step-three.component';
 
 @Component({
   selector: 'app-add-product-layout',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, FontAwesomeModule, CreateStepOneComponent, CreateStepTwoComponent],
+  imports: [RouterOutlet, CommonModule, FontAwesomeModule, CreateStepOneComponent, CreateStepTwoComponent, CreateStepThreeComponent],
   templateUrl: './add-product-layout.component.html',
   styleUrl: './add-product-layout.component.scss'
 })
@@ -25,6 +27,8 @@ export class AddProductLayoutComponent implements OnInit {
   currentStep: number = 1;
   categories:Array<any> = [];
   catAndSubcatInfo: CategoryInfo | undefined;
+  infoProductToSave: ProductInfo | undefined;
+  productInfoToEdit: ProductInfo | undefined;
 
   constructor(
     private productService: ProductServiceService
@@ -53,12 +57,19 @@ export class AddProductLayoutComponent implements OnInit {
     this.catAndSubcatInfo = info;
   }
 
+  productInfo(pInfo:ProductInfo){
+    this.infoProductToSave = pInfo;
+  }
+
   prevStep(step:number){
-    console.log(step)
     if(step == 3){
       this.isSaved = false;
     }
     this.currentStep = step-1;
+  }
+
+  prevInfo(pInfoPrev:ProductInfo){
+    this.productInfoToEdit = pInfoPrev;
   }
 
   saveProduct(step:number){

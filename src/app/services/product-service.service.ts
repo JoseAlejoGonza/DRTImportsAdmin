@@ -27,4 +27,12 @@ export class ProductServiceService {
   setSubcategory(body:any): Observable<any>{
     return this.http.post<any>(Endpoints.PRODUCTS.SET_SUBCATEGORY, {data:body});
   }
+
+  getProductCodeBar(codeBar:number): Observable<any>{
+    return this.http.get<any>(Endpoints.PRODUCTS.GET_PRODUCT_CODEBAR(codeBar));
+  }
+
+  setProduct(body:any): Observable<any>{
+    return this.http.post<any>(Endpoints.PRODUCTS.SET_PRODUCT, {data:body});
+  }
 }

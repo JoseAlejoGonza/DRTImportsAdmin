@@ -6,7 +6,7 @@ import { faGreaterThan, faXmark, faCircleExclamation, faL } from '@fortawesome/f
 import { ProductServiceService } from '../../../services/product-service.service';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { CATEGORY_EXIST, ERROR, INSERT_FAILED, INSERT_SUCCESFUL, SUBCATEGORY_EXIST } from '../../../const/categoryReq';
+import { CATEGORY_EXIST, ERROR, INSERT_FAILED, INSERT_SUCCESFUL, SUBCATEGORY_EXIST } from '../../../const/constRequests';
 import { CategoryInfo } from '../../../models/cotegoryInfo.model';
 
 @Component({
