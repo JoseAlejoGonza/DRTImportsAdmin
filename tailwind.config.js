@@ -10,6 +10,9 @@ module.exports = {
       textColor:{
         primary: '#45bcb5',
         danger: '#F00'
+      },
+      borderColor:{
+        secondaryGray: '#7786a3'
       }
     },
   },

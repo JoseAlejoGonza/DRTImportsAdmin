@@ -1,0 +1,218 @@
+<div class="flex h-dvh rounded bg-gray-50 dark:bg-gray-800 w-auto text-gray-500 pt-16 pl-3">
+    <div *ngIf="flagModal" id="default-modal" tabindex="-1" aria-hidden="true"
+     class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50 overflow-y-auto">
+        <div class="relative p-4 w-full max-w-2xl max-h-full h-auto">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 max-h-[90vh] overflow-y-auto">
+                <div class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Editar información de "{{productToEdit?.product_name}}"
+                    </h3>
+                    <button (click)="closeModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                        <fa-icon [icon]="faXmark" [ngClass]="'fa-lg'"></fa-icon>
+                    <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <div class="p-4 space-y-4">
+                    <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Información del producto</h3>
+                    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                        <div>
+                            <label for="productName" [ngClass]="classLabel">Nombre del producto</label>
+                            <input type="text" name="productName" id="productName"
+                            [ngClass]="classInput"
+                            placeholder="Nombre del producto" 
+                            [(ngModel)]="productName" [disabled]="true">
+                        </div>
+                        <div>
+                            <label for="productDescription" [ngClass]="classLabel">Descripción del producto</label>
+                            <input type="text" name="productDescription" id="productDescription"
+                            [ngClass]="classInput"
+                            placeholder="Descripción del producto"
+                            [(ngModel)]="productDescription"
+                            (input)="onDescriptionChange()">
+                            <span *ngIf="descriptionInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+                        </div>
+                        <div>
+                            <label for="productQuantity" [ngClass]="classLabel">Cantidad de unidades a agregar</label>
+                            <input type="number" name="productQuantity" id="productQuantity"
+                            [ngClass]="classInput"
+                            placeholder="Cantidad de productos ej(123456...)" 
+                            [(ngModel)]="productQuantity"
+                            (input)="onQuantityChange()">
+                            <span *ngIf="quantityInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+                        </div>
+                    </div>
+                    <div class="border-t-4 border-secondaryGray pb-6"></div>
+                    <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Precio del producto</h3>
+                    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                        <div>
+                            <label for="productPrice" [ngClass]="classLabel">Precio $</label>
+                            <input type="number" name="productPrice" id="productPrice"
+                            [ngClass]="classInput"
+                            placeholder="Precio del producto"
+                            [(ngModel)]="productPrice"
+                            (input)="onPriceChange()"> 
+                            <span *ngIf="priceInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+                        </div>
+                        <div>
+                            <label for="productPercent" [ngClass]="classLabel">Porcentaje de descuento</label>
+                            <input type="number" name="productPercent" id="productPercent"
+                            [ngClass]="classInput"
+                            placeholder="Porcentaje de descuento ej(0-100)" 
+                            [(ngModel)]="productPercent"
+                            (input)="onPercentChange()">
+                            <span *ngIf="percentInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+                        </div>
+                    </div>
+                    <div class="border-t-4 border-secondaryGray pb-6"></div>
+                    <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">URLs de las imágenes</h3>
+                    <div class="grid gap-4 mb-4 sm:grid-cols-1">
+                        <div>
+                            <label for="principalImage" [ngClass]="classLabel">Imagen para la portada</label>
+                            <input type="text" name="principalImage" id="principalImage"
+                            [ngClass]="classInput"
+                            placeholder="Nombre de la categoría" 
+                            [(ngModel)]="principalImage"
+                            (input)="onPrincipalImageChange()">
+                            <span *ngIf="principalImageInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+                        </div>
+                        <div>
+                            <label for="twoImage" [ngClass]="classLabel">Segunda imagen</label>
+                            <input type="text" name="twoImage" id="twoImage"
+                            [ngClass]="classInput"
+                            placeholder="Nombre de la categoría" 
+                            [(ngModel)]="twoImage"
+                            (input)="onTwoImageChange()">
+                            <span *ngIf="twoImageInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+                        </div>
+                        <div>
+                            <label for="threeImage" [ngClass]="classLabel">Tercera imagen</label>
+                            <input type="text" name="threeImage" id="threeImage"
+                            [ngClass]="classInput"
+                            placeholder="Nombre de la categoría" 
+                            [(ngModel)]="threeImage"
+                            (input)="onThreeImageChange()">
+                            <span *ngIf="threeImageInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+                        </div>
+                        <div>
+                            <label for="fourImage" [ngClass]="classLabel">Cuarta imagen</label>
+                            <input type="text" name="fourImage" id="fourImage"
+                            [ngClass]="classInput"
+                            placeholder="Nombre de la categoría" 
+                            [(ngModel)]="fourImage"
+                            (input)="onFourImageChange()">
+                            <span *ngIf="fourImageInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+                        </div>
+                        <div>
+                            <label for="fiveImage" [ngClass]="classLabel">Quinta imagen</label>
+                            <input type="text" name="fiveImage" id="fiveImage"
+                            [ngClass]="classInput"
+                            placeholder="Nombre de la categoría" 
+                            [(ngModel)]="fiveImage"
+                            (input)="onFiveImageChange()">
+                            <span *ngIf="fiveImageInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center p-4 border-t border-gray-200 dark:border-gray-600">
+                    <button (click)="saveChanges()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Guardar</button>
+                    <button (click)="closeModal()" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="w-auto text-sm rtl:text-right text-gray-500 dark:text-gray-400">
+        <caption class="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+            <span>Nuestros productos</span>
+            <div *ngIf="notificationError" id="alert-border-2" [ngClass]="styleModal" role="alert">
+                <fa-icon [icon]="faCircleExclamation" [ngClass]="'fa-lg'"></fa-icon>
+                <div class="ms-3 text-sm font-medium">
+                    {{ textNotification }}
+                </div>
+                <button type="button" (click)="closeModalAlert()" [ngClass]="styleButtonCloseModal"  data-dismiss-target="#alert-border-2" aria-label="Close">
+                    <span class="sr-only">Dismiss</span>
+                    <fa-icon [icon]="faXmark" [ngClass]="'fa-lg'"></fa-icon>
+                </button>
+            </div>
+            <div class="grid gap-4 mb-4 sm:grid-cols-2 pt-8">
+                <div>
+                   <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Buscar por código de barras</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <fa-icon [icon]="faMagnifyingGlass" [ngClass]="'fa-lg'"></fa-icon>
+                        </div>
+                        <input type="number" [(ngModel)]="productCodeBar" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar código de barras..." required />
+                        <button (click)="searchCodeBar()" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
+                    </div>
+                </div>
+                <div>
+                    <!-- <form class="max-w-md mx-auto">    -->
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Buscar por nombre / descripción / subcategoría</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <fa-icon [icon]="faMagnifyingGlass" [ngClass]="'fa-lg'"></fa-icon>
+                            </div>
+                            <input type="search" [(ngModel)]="searchInfo" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar nombre, descripción, subcategoría..." required />
+                            <button (click)="searchProduct()" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
+                        </div>
+                    <!-- </form> -->
+                </div>
+            </div>
+        </caption>
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Nombre
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Descripción
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Cantidad
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Subcategoría
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Precio con descuento
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Descuento
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Precio sin descuento
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <span class="sr-only">Edit</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            <tr *ngFor="let prod of filteredProducts" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{prod.product_name }}
+                </th>
+                <td class="px-6 py-4">
+                    {{prod.product_description}}
+                </td>
+                <td class="px-6 py-4">
+                    {{prod.total_quantity}}
+                </td>
+                <td class="px-6 py-4">
+                    {{prod.sub_category_name}}
+                </td>
+                <td class="px-6 py-4">
+                    {{prod.price | currency}}
+                </td>
+                <td class="px-6 py-4">
+                    {{prod.discount | percent}}
+                </td>
+                <td class="px-6 py-4">
+                    {{prod.regular_price | currency}}
+                </td>
+                <td class="px-6 py-4 text-right">
+                    <button (click)="openModal(prod)" class="text-white bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Editar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

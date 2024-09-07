@@ -1,0 +1,70 @@
+<ol class="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base pt-16 pl-3 pr-3">
+    <li class="flex md:w-full items-center sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
+        <span *ngIf="currentStep == 1" class="text-blue-600 dark:text-blue-500">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <span class="me-2">1</span>
+                Seleccionar <span class="hidden sm:inline-flex sm:ms-2">Categoría</span>
+            </span>
+        </span>
+        <span *ngIf="currentStep > 1" class="text-blue-600 dark:text-blue-500">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <fa-icon *ngIf="currentStep>1" [icon]="faCircleCheck" [ngClass]="'fa-ls'"></fa-icon>
+                Seleccionar <span class="hidden sm:inline-flex sm:ms-2">Categoría</span>
+            </span>
+        </span>
+    </li>
+    <li class="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
+        <span *ngIf="currentStep < 2">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <span class="me-2">2</span>
+                Información <span class="hidden sm:inline-flex sm:ms-2">general</span>
+            </span>
+        </span>
+        <span *ngIf="currentStep == 2" class="text-blue-600 dark:text-blue-500">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <span class="me-2">2</span>
+                Información <span class="hidden sm:inline-flex sm:ms-2">general</span>
+            </span>
+        </span>
+        <span *ngIf="currentStep > 2" class="text-blue-600 dark:text-blue-500">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <fa-icon *ngIf="currentStep>1" [icon]="faCircleCheck" [ngClass]="'fa-ls'"></fa-icon>
+                Información <span class="hidden sm:inline-flex sm:ms-2">general</span>
+            </span>
+        </span>
+    </li>
+    <li class="flex items-center">
+        <span *ngIf="currentStep < 3 && isSaved == false">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <span class="me-2">3</span>
+                Confirmación
+            </span>
+        </span>
+        <span *ngIf="currentStep == 3 && isSaved == false" class="text-blue-600 dark:text-blue-500">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <span class="me-2">3</span>
+                Confirmación
+            </span>
+        </span>
+        <span *ngIf="isSaved == true" class="text-blue-600 dark:text-blue-500">
+            <span class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <fa-icon [icon]="faCircleCheck" [ngClass]="'fa-ls'"></fa-icon>
+                Confirmación
+            </span>
+        </span>
+    </li>
+</ol>
+
+<div *ngIf="currentStep === 1" class="pl-3 pr-3">
+        <app-create-step-one [step]="currentStep" (categoryInfo)="categoryInfo($event)" (nextStep)="nextStep($event)"></app-create-step-one>
+</div>
+
+<div *ngIf="currentStep === 2" class="pl-3 pr-3">
+       <app-create-step-two [step]="currentStep" [categoryInfo]="catAndSubcatInfo" [productInfoToEdit]="productInfoToEdit" (productInfo)="productInfo($event)" (nextStep)="nextStep($event)" (prevStep)="prevStep($event)"></app-create-step-two>
+</div>
+
+<div *ngIf="currentStep === 3" class="pl-3 pr-3">
+    <app-create-step-three [step]="currentStep" [productInfo]="infoProductToSave" (infoToEdit)="prevInfo($event)" (prevStep)="prevStep($event)" (goToFirstStep)="nextStep($event)"></app-create-step-three>
+</div>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,56 @@
+<div class="container">
+    <div *ngIf="notificationError" id="alert-border-2" [ngClass]="styleModal" role="alert">
+        <fa-icon [icon]="faCircleExclamation" [ngClass]="'fa-lg'"></fa-icon>
+        <div class="ms-3 text-sm font-medium">
+            {{ textNotification }}
+        </div>
+        <button type="button" (click)="closeModal()" [ngClass]="styleButtonCloseModal"  data-dismiss-target="#alert-border-2" aria-label="Close">
+            <span class="sr-only">Dismiss</span>
+            <fa-icon [icon]="faXmark" [ngClass]="'fa-lg'"></fa-icon>
+        </button>
+    </div>
+    <h3 class="mb-4 text-lg font-medium leading-none text-gray-900 dark:text-white">Seleccione una categoría y subcategoría</h3>
+    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+        <div>
+            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoría</label>
+            <select #categorySelect id="category" (change)="categorySelected(categorySelect.value)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                <option disabled="true" [value]="0" selected="">Seleccione categoría</option>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.category_name }}</option>
+                <option value="addNewCategory">Agregar una categoría</option>
+            </select>
+        </div>
+        <div>
+            <label for="subcategory" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subcategoría</label>
+            <select #subcategorySelect [disabled]="flagDisabled" id="subcategory" (change)="subcategorySelected(subcategorySelect.value)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                <option disabled="true" [value]="0" [selected]="!newCategoryInput">Seleccione subcategoría</option>
+                <option *ngFor="let subcategory of subcategories" [value]="subcategory.id">{{ subcategory.sub_category_name }}</option>
+                <option [selected]="newCategoryInput" value="addNewSubcategory">Agregar una subcategoría</option>
+            </select>    
+        </div>
+        <div *ngIf="newCategoryInput">
+            <label for="categoryName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de la nueva categoría</label>
+            <input type="text" name="categoryName" id="categoryName" 
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+            placeholder="Nombre de la categoría" 
+            [(ngModel)]="categoryName"
+            (input)="onCategoryNameChange()">
+            <span *ngIf="categoryInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+        <div *ngIf="newSubcategoryInput">
+            <label for="categoryName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de la nueva subcategoría</label>
+            <input type="text" name="categoryName" id="categoryName"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+            placeholder="Nombre de la categoría" 
+            [(ngModel)]="subcategoryName"
+            (input)="onSubcategoryNameChange()">
+            <span *ngIf="subcategoryInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+    </div>
+    <div class="flex gap-4 mb-4 sm:grid-cols-2">
+        <div class="gap-4 mb-4 sm:grid-cols-2 ml-auto">
+            <button [disabled]="flagDisabledButton" (click)="save()" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Siguiente <fa-icon [icon]="faGreaterThan" [ngClass]="'fa-lg'"></fa-icon>
+            </button>
+        </div>
+    </div>
+</div>
