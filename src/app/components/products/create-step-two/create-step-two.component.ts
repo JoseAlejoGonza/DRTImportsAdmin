@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CategoryInfo } from '../../../models/cotegoryInfo.model';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCircleExclamation, faGreaterThan, faL, faLessThan, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCircleExclamation, faGreaterThan, faLessThan, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductInfo } from '../../../models/productInfo.model';

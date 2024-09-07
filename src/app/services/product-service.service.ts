@@ -35,4 +35,12 @@ export class ProductServiceService {
   setProduct(body:any): Observable<any>{
     return this.http.post<any>(Endpoints.PRODUCTS.SET_PRODUCT, {data:body});
   }
+
+  getProduct(): Observable<any>{
+    return this.http.get<any>(Endpoints.PRODUCTS.GET_PRODUCTS);
+  }
+
+  editProduct(body:any): Observable<any>{
+    return this.http.put<any>(Endpoints.PRODUCTS.EDIT_PRODUCT, {data:body});
+  }
 }

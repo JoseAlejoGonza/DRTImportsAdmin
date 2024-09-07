@@ -13,6 +13,7 @@ export class Endpoints {
         GET_PRODUCT_CODEBAR: (codeBar: number | undefined) => {
             return `${environment.host}get-product-codebar/${codeBar}`
         },
+        EDIT_PRODUCT: `${environment.host}edit-product`,
     };
     public static LOGIN = {
         VALIDATE_CREDENTIALS: `${environment.host}login`
