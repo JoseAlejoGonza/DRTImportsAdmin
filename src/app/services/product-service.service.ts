@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Endpoints } from '../const/endpoints';
 
 @Injectable({
@@ -8,9 +8,18 @@ import { Endpoints } from '../const/endpoints';
 })
 export class ProductServiceService {
 
+  private totalPurchases = new BehaviorSubject<any>(this.getTotalPurchasesFromStorage());
+  totalPurchases$ = this.totalPurchases.asObservable();
+
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    if (this.isBrowser()) {
+      this.totalPurchases$.subscribe((items) => {
+        this.saveTotalPurchasesToStorage(items);
+      });
+    }
+   }
 
   getCategory(): Observable<any>{
     return this.http.get<any>(Endpoints.PRODUCTS.GET_CATEGORIES);
@@ -42,5 +51,40 @@ export class ProductServiceService {
 
   editProduct(body:any): Observable<any>{
     return this.http.put<any>(Endpoints.PRODUCTS.EDIT_PRODUCT, {data:body});
+  }
+
+  getPurchases(): Observable<any>{
+    return this.http.get<any>(Endpoints.PURCHASES.GET_PRODUCTS);
+  }
+
+  updateTotalPurchase(total:number){
+    console.log(total)
+    this.totalPurchases.next(total);
+  }
+
+  private saveTotalPurchasesToStorage(items: any[]) {
+    if (this.isBrowser()) {
+      localStorage.setItem('totalPurchases', JSON.stringify(items));
+    }
+  }
+
+  private getTotalPurchasesFromStorage(): any[] {
+    if (this.isBrowser()) {
+      const storedTotalItems = localStorage.getItem('totalPurchases');
+      return isNaN(parseFloat(storedTotalItems!)) ? null : JSON.parse(storedTotalItems!);
+    }
+    return [];
+  }
+
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+  }
+
+  getDetailProducts(idPurchase:number): Observable<any>{
+    return this.http.get<any>(Endpoints.PURCHASES.GET_DETAIL_PRODUCTS(idPurchase));
+  }
+
+  sendPurchase(body:any): Observable<any>{
+    return this.http.put<any>(Endpoints.PURCHASES.SEND_PURCHASE, {data:body});
   }
 }

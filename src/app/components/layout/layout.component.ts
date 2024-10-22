@@ -4,6 +4,9 @@ import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/rou
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MENU } from '../../const/menuOptions';
 import { Menu } from '../../models/menu.model';
+import { ProductServiceService } from '../../services/product-service.service';
+import { Subscription } from 'rxjs';
+import { PendingPurchase } from '../../models/purchase.model';
 
 @Component({
   selector: 'app-layout',
@@ -16,13 +19,23 @@ export class LayoutComponent implements OnInit {
   totalPendingPurchases: number = 0;
   menuOptions: Menu[] = MENU;
 
+  purchaseSub: Subscription | undefined;
+
+  pendingPurchases: PendingPurchase[] | undefined;
+
   constructor(
     protected readonly router: Router,
-    protected readonly route: ActivatedRoute
+    protected readonly route: ActivatedRoute,
+    private productService: ProductServiceService
   ){}
 
   ngOnInit(): void {
-    console.log(this.menuOptions);
+    this.purchaseSub = this.productService.totalPurchases$.subscribe((items)=>{
+      this.totalPendingPurchases = items;
+    })
   }
 
+  ngOnDestroy(): void {
+    this.purchaseSub?.unsubscribe();
+  }
 }

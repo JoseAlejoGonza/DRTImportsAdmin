@@ -21,4 +21,11 @@ export class Endpoints {
     public static USERS = {
         GET_USERS: `${environment.host}users-admin`
     };
+    public static PURCHASES = {
+        GET_PRODUCTS: `${environment.host}list-pending-purchases`,
+        GET_DETAIL_PRODUCTS: (purchaseId: number | undefined) => {
+            return `${environment.host}list-products-by-order/${purchaseId}`
+        },
+        SEND_PURCHASE: `${environment.host}send-purchase`,
+    };
 }

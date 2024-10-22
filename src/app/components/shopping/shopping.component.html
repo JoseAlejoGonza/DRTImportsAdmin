@@ -1,4 +1,95 @@
-<div class="flex h-dvh rounded bg-gray-50 dark:bg-gray-800 w-auto text-gray-500 pt-16 pl-3">
-    <fa-icon [icon]="faChartPie" [ngClass]="'fa-lg'"></fa-icon>
-    My component
+<div class="pt-16 pl-3 pr-3">
+    <h5 class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white">Compras pendientes por enviar</h5>
+    <div *ngIf="flagModal" id="default-modal" tabindex="-1" aria-hidden="true"
+     class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50 overflow-y-auto">
+        <div class="relative p-4 w-full max-w-3xl max-h-full h-auto">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 max-h-[90vh] overflow-y-auto">
+                <div class="flex items-center text-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Preparar orden: <span class="text-2xl">{{orderIdToModal}}</span>
+                    </h3>
+                    <button (click)="closeModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                        <fa-icon [icon]="faXmark" [ngClass]="'fa-lg'"></fa-icon>
+                    <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <div class="p-4 space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Dirección de envío: <span class="text-xl">{{addressOrder}}</span>
+                    </h3>
+                    <table class="w-auto text-sm rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Nombre
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Cantidad comprada
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Precio por unidad
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Precio por cantidad
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Código de barras
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr *ngFor="let prod of pendingProductSend" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{prod.name }}
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{prod.purchase_quantity}}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{price(prod.unit_price)|currency}}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{price(prod.total_price)|currency}}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{prod.bar_code}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex gap-4 mb-3 mx-3 sm:grid-cols-2">
+                    <div class="gap-4 sm:grid-cols-2 ml-auto">
+                        <button (click)="completeOrder(idTransaction)" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Enviado <fa-icon [icon]="faCheck" [ngClass]="'fa-lg'"></fa-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="notificationError" id="alert-border-2" [ngClass]="styleModal" role="alert">
+        <fa-icon [icon]="faCircleExclamation" [ngClass]="'fa-lg'"></fa-icon>
+        <div class="ms-3 text-sm font-medium">
+            {{ textNotification }}
+        </div>
+        <button type="button" (click)="closeModalAlert()" [ngClass]="styleButtonCloseModal"  data-dismiss-target="#alert-border-2" aria-label="Close">
+            <span class="sr-only">Dismiss</span>
+            <fa-icon [icon]="faXmark" [ngClass]="'fa-lg'"></fa-icon>
+        </button>
+    </div>
+    <div *ngFor="let purchase of pendingPurchases" class="p-6 bg-white border border-gray-200 mb-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-700">
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Número de Orden: {{purchase.order_id}}</h5>
+        <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Cantidad de productos comprados: {{purchase.purchase_quantity}}</p>
+        <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Fecha y Hora de compra: <span class="font-bold text-gray-300">{{createDate(purchase.purchase_date)}}</span></p>
+        <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Dirección de envío: <span class="font-bold text-gray-300">{{purchase.address_to_send}}</span></p>
+        <p class="mb-3 text-xl font-bold text-gray-700 dark:text-gray-400">Compra total: {{price(purchase.total_price)|currency}}</p>
+        <div class="flex gap-4 sm:grid-cols-2">
+            <div class="gap-4 sm:grid-cols-2 ml-auto">
+                <button (click)="openOrder(purchase.id, purchase.order_id, purchase.address_to_send)" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Preparar envío
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
