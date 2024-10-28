@@ -1,5 +1,4 @@
 <div class="pt-16 pl-3 pr-3">
-    <h5 class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white">Compras pendientes por enviar</h5>
     <div *ngIf="flagModal" id="default-modal" tabindex="-1" aria-hidden="true"
      class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50 overflow-y-auto">
         <div class="relative p-4 w-full max-w-3xl max-h-full h-auto">
@@ -78,17 +77,78 @@
             <fa-icon [icon]="faXmark" [ngClass]="'fa-lg'"></fa-icon>
         </button>
     </div>
-    <div *ngFor="let purchase of pendingPurchases" class="p-6 bg-white border border-gray-200 mb-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-700">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Número de Orden: {{purchase.order_id}}</h5>
-        <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Cantidad de productos comprados: {{purchase.purchase_quantity}}</p>
-        <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Fecha y Hora de compra: <span class="font-bold text-gray-300">{{createDate(purchase.purchase_date)}}</span></p>
-        <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Dirección de envío: <span class="font-bold text-gray-300">{{purchase.address_to_send}}</span></p>
-        <p class="mb-3 text-xl font-bold text-gray-700 dark:text-gray-400">Compra total: {{price(purchase.total_price)|currency}}</p>
-        <div class="flex gap-4 sm:grid-cols-2">
-            <div class="gap-4 sm:grid-cols-2 ml-auto">
-                <button (click)="openOrder(purchase.id, purchase.order_id, purchase.address_to_send)" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Preparar envío
-                </button>
+    <div class="p-6 bg-white border border-gray-200 mb-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-700">
+        <div (click)="openAccordion()" class="flex">
+            <div class="w-11/12">
+                <h5 class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white">Compras pendientes por enviar ({{pendingPurchases?.length}} pendientes)</h5>
+            </div>
+            <div class="w-1/12 text-center">
+                <fa-icon *ngIf="flagPendingPurchase" class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white" [icon]="faChevronUp" [ngClass]="'fa-lg'"></fa-icon>
+                <fa-icon *ngIf="!flagPendingPurchase" class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white" [icon]="faChevronDown" [ngClass]="'fa-lg'"></fa-icon>
+            </div>
+        </div>
+        <div *ngIf="flagPendingPurchase"  @openClose class="container-animation">
+            <div *ngFor="let purchase of pendingPurchases" class="p-6 bg-white border border-gray-200 mb-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-600">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Número de Orden: {{purchase.order_id}}</h5>
+                <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Cantidad de productos comprados: {{purchase.purchase_quantity}}</p>
+                <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Fecha y Hora de compra: <span class="font-bold text-gray-300">{{createDate(purchase.purchase_date)}}</span></p>
+                <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Dirección de envío: <span class="font-bold text-gray-300">{{purchase.address_to_send}}</span></p>
+                <p class="mb-3 text-xl font-bold text-gray-700 dark:text-gray-400">Compra total: {{price(purchase.total_price)|currency}}</p>
+                <div class="flex gap-4 sm:grid-cols-2">
+                    <div class="gap-4 sm:grid-cols-2 ml-auto">
+                        <button (click)="openOrder(purchase.id, purchase.order_id, purchase.address_to_send, purchase.is_being_prepared)" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Preparar envío
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-6 bg-white border border-gray-200 mb-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-700">
+        <div (click)="openAccordionDelivered()" class="flex">
+            <div class="w-11/12">
+                <h5 class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white">Compras enviadas pendientes por entregar ({{pendingPurchasesDelivered?.length}} pendientes)</h5>
+            </div>
+            <div class="w-1/12 text-center">
+                <fa-icon *ngIf="flagPendingPurchaseDelivered" class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white" [icon]="faChevronUp" [ngClass]="'fa-lg'"></fa-icon>
+                <fa-icon *ngIf="!flagPendingPurchaseDelivered" class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white" [icon]="faChevronDown" [ngClass]="'fa-lg'"></fa-icon>
+            </div>
+        </div>
+        <div *ngIf="flagPendingPurchaseDelivered"  @openClose class="container-animation">
+            <div *ngFor="let purchaseDelivered of pendingPurchasesDelivered" class="p-6 bg-white border border-gray-200 mb-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-600">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Número de Orden: {{purchaseDelivered.order_id}}</h5>
+                <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Cantidad de productos comprados: {{purchaseDelivered.purchase_quantity}}</p>
+                <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Fecha y Hora de compra: <span class="font-bold text-gray-300">{{createDate(purchaseDelivered.purchase_date)}}</span></p>
+                <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Dirección de envío: <span class="font-bold text-gray-300">{{purchaseDelivered.address_to_send}}</span></p>
+                <p class="mb-3 text-xl font-bold text-gray-700 dark:text-gray-400">Compra total: {{price(purchaseDelivered.total_price)|currency}}</p>
+                <div class="flex gap-4 sm:grid-cols-2">
+                    <div class="gap-4 sm:grid-cols-2 ml-auto">
+                        <button (click)="productIsDelivered(purchaseDelivered.id)" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Entregado
+                            <fa-icon [icon]="faCheck" [ngClass]="'fa-lg'"></fa-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-6 bg-white border border-gray-200 mb-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-700">
+        <div (click)="openAccordionHistory()" class="flex">
+            <div class="w-11/12">
+                <h5 class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white">Historial de compras ({{pendingPurchasesHistory?.length}} totales)</h5>
+            </div>
+            <div class="w-1/12 text-center">
+                <fa-icon *ngIf="flagHistoryPurchases" class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white" [icon]="faChevronUp" [ngClass]="'fa-lg'"></fa-icon>
+                <fa-icon *ngIf="!flagHistoryPurchases" class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white" [icon]="faChevronDown" [ngClass]="'fa-lg'"></fa-icon>
+            </div>
+        </div>
+        <div *ngIf="flagHistoryPurchases"  @openClose class="container-animation">
+            <div *ngFor="let purchaseHistory of pendingPurchasesHistory" class="p-6 bg-white border border-gray-200 mb-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-600">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Número de Orden: {{purchaseHistory.order_id}}</h5>
+                <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Cantidad de productos comprados: {{purchaseHistory.purchase_quantity}}</p>
+                <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Fecha y Hora de compra: <span class="font-bold text-gray-300">{{createDate(purchaseHistory.purchase_date)}}</span></p>
+                <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">Dirección de envío: <span class="font-bold text-gray-300">{{purchaseHistory.address_to_send}}</span></p>
+                <p class="mb-3 text-xl font-bold text-gray-700 dark:text-gray-400">Compra total: {{price(purchaseHistory.total_price)|currency}}</p>
             </div>
         </div>
     </div>

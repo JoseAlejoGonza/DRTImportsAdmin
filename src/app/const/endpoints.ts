@@ -23,6 +23,8 @@ export class Endpoints {
     };
     public static PURCHASES = {
         GET_PRODUCTS: `${environment.host}list-pending-purchases`,
+        GET_HISTORY: `${environment.host}list-history-purchases`,
+        GET_PRODUCTS_DELIVERED: `${environment.host}list-pending-purchases-delivered`,
         GET_DETAIL_PRODUCTS: (purchaseId: number | undefined) => {
             return `${environment.host}list-products-by-order/${purchaseId}`
         },

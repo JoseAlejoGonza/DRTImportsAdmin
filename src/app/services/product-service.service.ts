@@ -57,8 +57,15 @@ export class ProductServiceService {
     return this.http.get<any>(Endpoints.PURCHASES.GET_PRODUCTS);
   }
 
+  getHistoryPurchases(): Observable<any>{
+    return this.http.get<any>(Endpoints.PURCHASES.GET_HISTORY);
+  }
+
+  getPurchasesDelivered(): Observable<any>{
+    return this.http.get<any>(Endpoints.PURCHASES.GET_PRODUCTS_DELIVERED);
+  }
+
   updateTotalPurchase(total:number){
-    console.log(total)
     this.totalPurchases.next(total);
   }
 

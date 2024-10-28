@@ -5,6 +5,9 @@ export interface PendingPurchase{
     total_price: string;
     address_to_send: string;
     order_id: string;
+    is_being_prepared: number;
+    is_delivered: number;
+    it_was_sent?: number;
 }
 
 export interface ProductsPurchase{
