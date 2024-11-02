@@ -17,4 +17,5 @@ export interface ProductsPurchase{
     purchase_quantity: number;
     unit_price: string;
     total_price: string;
+    color_selected: string;
 }

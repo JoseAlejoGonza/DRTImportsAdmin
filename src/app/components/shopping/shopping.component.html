@@ -26,6 +26,9 @@
                                     Cantidad comprada
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Color
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Precio por unidad
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -43,6 +46,9 @@
                                 </th>
                                 <td class="px-6 py-4">
                                     {{prod.purchase_quantity}}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{prod.color_selected|uppercase}}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{price(prod.unit_price)|currency}}
