@@ -22,11 +22,11 @@
         </div>
         <div>
             <label for="productDescription" [ngClass]="classLabel">Descripción del producto</label>
-            <input type="text" name="productDescription" id="productDescription"
+            <textarea type="text" name="productDescription" id="productDescription"
             [ngClass]="classInput"
             placeholder="Descripción del producto"
             [(ngModel)]="productDescription"
-            (input)="onDescriptionChange()">
+            (input)="onDescriptionChange()"></textarea>
             <span *ngIf="descriptionInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
         </div>
         <div>
@@ -56,6 +56,15 @@
             [(ngModel)]="productQuantity"
             (input)="onQuantityChange()">
             <span *ngIf="quantityInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
+        </div>
+        <div>
+            <label for="productQuantity" [ngClass]="classLabel">Colores disponibles (agregar separados por coma sin espacios ej:(azul,verde,...))</label>
+            <input type="text" name="productColors" id="productColors"
+            [ngClass]="classInput"
+            placeholder="Colores ej(azul,verde,...)"
+            [(ngModel)]="productColors"
+            (input)="onColorsChange()">
+            <span *ngIf="colorInput == true" class="mb-4 text-sm text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400 font-medium" role="alert">*Este campo es requerido</span>
         </div>
     </div>
     <div class="border-t-4 border-secondaryGray pb-6"></div>

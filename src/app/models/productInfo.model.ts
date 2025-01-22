@@ -3,6 +3,7 @@ import { CategoryInfo } from "./cotegoryInfo.model";
 export interface ProductInfo {
     pName: string;
     pDesc: string;
+    pColors: string;
     pSlug: string;
     pCodeBar: number | undefined;
     pQantity: number | undefined;
@@ -14,6 +15,7 @@ export interface ProductInfo {
 }
 
 export interface ProductToEdit{
+    colors: string | undefined;
     bar_code: number | undefined;
     discount: number | undefined;
     images: string | undefined;

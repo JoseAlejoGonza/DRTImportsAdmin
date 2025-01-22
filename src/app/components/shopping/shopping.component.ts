@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faChartPie, faCheck, faChevronDown, faChevronUp, faCircleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faChartPie, faCheck, faChevronDown, faChevronUp, faCircleExclamation, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ProductServiceService } from '../../services/product-service.service';
 import { Subscription } from 'rxjs';
 import { PendingPurchase, ProductsPurchase } from '../../models/purchase.model';
 import { ERROR, UPDATE_FAILED, UPDATE_SUCCESFUL } from '../../const/constRequests';
 import { DELIVERED, PREPARED, SEND } from '../../const/purchases';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-shopping',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, FormsModule],
   templateUrl: './shopping.component.html',
   styleUrl: './shopping.component.scss',
   animations: [
@@ -34,6 +35,12 @@ export class ShoppingComponent implements OnInit {
   faCircleExclamation = faCircleExclamation;
   faChevronDown = faChevronDown;
   faChevronUp = faChevronUp;
+  faMagnifyingGlass = faMagnifyingGlass;
+
+  filteredProducts: Array<any> = [];
+  productsToPurchase: Array<any> = [];
+  productsArray: Array<any> = [];
+
 
   datePurchase: string = '';
   orderIdToModal: string = '';
@@ -43,18 +50,22 @@ export class ShoppingComponent implements OnInit {
   styleButtonCloseModal: string = '';
 
   idTransaction: number = 0;
+  productCodeBar: number | undefined;
+  totalPriceToPurchase: number | undefined;
 
   flagModal: boolean = false;
   notificationError: boolean = false;
   flagPendingPurchase: boolean = false;
   flagPendingPurchaseDelivered: boolean = false;
   flagHistoryPurchases: boolean = false;
+  flagPurchaseInShop: boolean = false;
 
   purchaseSub: Subscription | undefined;
   purchaseProdSub: Subscription | undefined;
   purchaseSendSub: Subscription | undefined;
   purchaseDeliveredSub: Subscription | undefined;
   purchaseHistorySub: Subscription | undefined;
+  productSub: Subscription | undefined;
 
   pendingPurchases: PendingPurchase[] | undefined;
   pendingPurchasesDelivered: PendingPurchase[] | undefined;
@@ -66,6 +77,18 @@ export class ShoppingComponent implements OnInit {
   ){ }
 
   ngOnInit(): void {
+    this.productSub = this.productService.getProduct().subscribe({
+      next: (data:any)=>{
+        this.productsArray = data;
+        this.filteredProducts = [...this.productsArray];
+      },
+      error: (err:any)=>{
+        console.log(err);
+      },
+      complete:()=>{
+        console.log("Complete");
+      }
+    })
     this.getPurchasesPending();
   }
 
@@ -79,6 +102,43 @@ export class ShoppingComponent implements OnInit {
 
   openAccordionHistory(){
     this.flagHistoryPurchases = !this.flagHistoryPurchases;
+  }
+
+  openAccordionPurchaseInShop(){
+    this.flagPurchaseInShop = !this.flagPurchaseInShop;
+  }
+
+  searchCodeBar(){
+    this.filteredProducts = this.productsArray.filter(product =>
+      product.bar_code.toString().includes(this.productCodeBar)
+    )
+    console.log('esto es el filterProduct', this.filteredProducts);
+    this.productsToPurchase.push(this.filteredProducts);
+    this.calculateTotalPrice();
+  }
+
+  deleteProduct(subarrayIndex: number, productIndex: number): void {
+    this.productsToPurchase[subarrayIndex].splice(productIndex, 1);
+    if (this.productsToPurchase[subarrayIndex].length === 0) {
+      this.productsToPurchase.splice(subarrayIndex, 1);
+    }
+    this.calculateTotalPrice();
+  }
+
+  calculateTotalPrice(){
+    let total = 0;
+
+    for (const productArray of this.productsToPurchase) {
+      for (const product of productArray) {
+        total += this.price(product.price);
+      }
+    }
+    this.totalPriceToPurchase = total;
+    console.log(this.totalPriceToPurchase, 'total price');
+  }
+
+  purchase(){
+    console.log("vamos a comprar!!");
   }
 
   getPurchasesPending(){
@@ -302,5 +362,6 @@ export class ShoppingComponent implements OnInit {
   ngOnDestroy(): void {
     this.purchaseSub?.unsubscribe();
     this.purchaseProdSub?.unsubscribe();
+    this.productSub?.unsubscribe();
   }
 }

@@ -39,10 +39,10 @@
             </div>
             <div>
                 <label for="productDescription" [ngClass]="classLabel">Descripción del producto</label>
-                <input type="text" name="productDescription" id="productDescription"
+                <textarea type="text" name="productDescription" id="productDescription"
                 [ngClass]="classInput"
                 placeholder="Descripción del producto"
-                [(ngModel)]="productDescription" [disabled]="true">
+                [(ngModel)]="productDescription" [disabled]="true"></textarea>
             </div>
             <div>
                 <label for="productSlug" [ngClass]="classLabel">Slug</label>
@@ -64,6 +64,13 @@
                 [ngClass]="classInput"
                 placeholder="Cantidad de productos ej(123456...)" 
                 [(ngModel)]="productQuantity" [disabled]="true">
+            </div>
+            <div>
+                <label for="productQuantity" [ngClass]="classLabel">Colores disponibles (agregar separados por coma sin espacios ej:(azul,verde,...))</label>
+                <input type="text" name="productColors" id="productColors"
+                [ngClass]="classInput"
+                placeholder="Colores ej(azul,verde,...)"
+                [(ngModel)]="productColors" [disabled]="true">
             </div>
         </div>
         <div class="border-t-4 border-secondaryGray pb-6"></div>

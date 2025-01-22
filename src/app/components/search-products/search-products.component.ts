@@ -31,6 +31,7 @@ export class SearchProductsComponent implements OnInit{
   searchInfo: string = '';
   productName: string | undefined;
   productDescription: string | undefined;
+  productColors: string | undefined;
   principalImage: string | undefined;
   twoImage: string | undefined;
   threeImage: string | undefined;
@@ -49,6 +50,7 @@ export class SearchProductsComponent implements OnInit{
   flagModal: boolean = false;
   nameInput: boolean = false;
   descriptionInput: boolean = false;
+  colorInput: boolean = false;
   quantityInput: boolean = false;
   priceInput: boolean = false;
   percentInput: boolean = false;
@@ -108,6 +110,8 @@ export class SearchProductsComponent implements OnInit{
 
   openModal(prod:any){
     this.productToEdit = prod;
+
+    console.log(this.productToEdit, 'esto es el producto específico');
     
     let arrayImages = this.productToEdit?.images?.split(',');
     this.productName = this.productToEdit?.product_name;
@@ -118,6 +122,7 @@ export class SearchProductsComponent implements OnInit{
     this.fourImage = arrayImages ? arrayImages[3]:'';
     this.fiveImage = arrayImages ? arrayImages[4]:'';
     this.productQuantity = this.productToEdit?.total_quantity;
+    this.productColors = this.productToEdit?.colors;
     this.productPrice = parseFloat(this.productToEdit?.regular_price ? this.productToEdit?.regular_price : '0');
     this.productPercent = this.productToEdit?.discount;
 
@@ -136,6 +141,13 @@ export class SearchProductsComponent implements OnInit{
       this.descriptionInput = false;
     }else{
       this.descriptionInput = true;
+    }
+  }
+  onColorsChange(){
+    if(this.productColors !== ''){
+      this.colorInput = false;
+    }else{
+      this.colorInput = true;
     }
   }
   onQuantityChange(){
@@ -211,6 +223,7 @@ export class SearchProductsComponent implements OnInit{
       pPriceId: this.productToEdit?.price_id,
       pName: this.productName,
       pDesc: this.productDescription,
+      pColors: this.productColors,
       pQantity: this.productQuantity,
       pPrice: this.productPrice,
       pPercent: this.productPercent,

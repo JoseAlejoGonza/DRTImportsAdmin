@@ -37,6 +37,7 @@ export class CreateStepTwoComponent implements OnInit {
   classInput: string = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
   productName: string = '';
   productDescription: string = '';
+  productColors: string = '';
   productSlug: string = '';
   principalImage: string = '';
   twoImage: string = '';
@@ -56,6 +57,7 @@ export class CreateStepTwoComponent implements OnInit {
   // booleans
   nameInput: boolean = false;
   descriptionInput: boolean = false;
+  colorInput: boolean = false;
   slugInput: boolean = false;
   codeBarInput: boolean = false;
   quantityInput: boolean = false;
@@ -80,6 +82,7 @@ export class CreateStepTwoComponent implements OnInit {
     if(this.productInfoToEdit){
       this.productName = this.productInfoToEdit?.pName;
       this.productDescription = this.productInfoToEdit?.pDesc;
+      this.productColors = this.productInfoToEdit?.pColors;
       this.productSlug = this.productInfoToEdit?.pSlug;
       this.principalImage = this.productInfoToEdit?.pPrincipalImage;
       this.twoImage = this.productInfoToEdit?.pOtherUrls[0];
@@ -105,6 +108,13 @@ export class CreateStepTwoComponent implements OnInit {
       this.descriptionInput = false;
     }else{
       this.descriptionInput = true;
+    }
+  }
+  onColorsChange(){
+    if(this.productColors !== ''){
+      this.colorInput = false;
+    }else{
+      this.colorInput = true;
     }
   }
   onSlugChange(){
@@ -199,6 +209,7 @@ export class CreateStepTwoComponent implements OnInit {
     this.onFiveImageChange();
     if(this.nameInput === true ||
       this.descriptionInput === true ||
+      this.colorInput === true ||
       this.slugInput === true ||
       this.codeBarInput === true ||
       this.quantityInput === true ||
@@ -215,6 +226,7 @@ export class CreateStepTwoComponent implements OnInit {
       this.productInfoToNextStep = {
         pName: this.productName,
         pDesc: this.productDescription,
+        pColors: this.productColors,
         pSlug: this.productSlug,
         pCodeBar: this.productCodeBar,
         pQantity: this.productQuantity,

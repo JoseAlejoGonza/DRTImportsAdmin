@@ -158,4 +158,61 @@
             </div>
         </div>
     </div>
+    <div class="p-6 bg-white border border-gray-200 mb-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-700">
+        <div (click)="openAccordionPurchaseInShop()" class="flex">
+            <div class="w-11/12">
+                <h5 class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white">Vendamos!</h5>
+            </div>
+            <div class="w-1/12 text-center">
+                <fa-icon *ngIf="flagPurchaseInShop" class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white" [icon]="faChevronUp" [ngClass]="'fa-lg'"></fa-icon>
+                <fa-icon *ngIf="!flagPurchaseInShop" class="mb-6 text-3xl font-bold text-centertracking-tight text-gray-900 dark:text-white" [icon]="faChevronDown" [ngClass]="'fa-lg'"></fa-icon>
+            </div>
+        </div>
+        <div *ngIf="flagPurchaseInShop"  @openClose class="container-animation">
+            <div>
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Buscar por código de barras</label>
+                 <div class="relative">
+                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                         <fa-icon [icon]="faMagnifyingGlass" [ngClass]="'fa-lg'"></fa-icon>
+                     </div>
+                     <input type="number" [(ngModel)]="productCodeBar" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar código de barras..." required />
+                     <button (click)="searchCodeBar()" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
+                 </div>
+                <div *ngFor="let productArray of productsToPurchase; let i = index">
+                    <div
+                      *ngFor="let product of productArray; let j = index"
+                      class="p-6 bg-white border border-gray-200 mb-2 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-600"
+                    >
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {{ product.product_name }}
+                        </h5>
+                        <img
+                            class="mb-3 img-product text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+                            [src]="product.images.split(',')[0]"
+                            alt="img"
+                        />
+                        <p class="mb-3 text-lg font-normal text-gray-700 dark:text-gray-400">
+                            Cantidad:
+                            <input type="number" value="1" />
+                        </p>
+                        <p class="mb-3 text-xl font-bold text-gray-700 dark:text-gray-400">
+                            Valor del producto: {{ price(product.price) | currency }}
+                        </p>
+                        <button
+                            (click)="deleteProduct(i, j)"
+                            class="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600"
+                            >
+                            Borrar
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4 bg-gray-100 border-t dark:bg-gray-800 dark:border-gray-700">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                      Valor total: {{ totalPriceToPurchase | currency }}
+                    </h3>
+                    <button (click)="purchase()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Pagar</button>
+                </div>
+             </div>
+        </div>
+    </div>
 </div>
