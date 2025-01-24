@@ -29,5 +29,6 @@ export class Endpoints {
             return `${environment.host}list-products-by-order/${purchaseId}`
         },
         SEND_PURCHASE: `${environment.host}send-purchase`,
+        PRINT_INVOICE: `${environment.host}pos/imprimir`
     };
 }

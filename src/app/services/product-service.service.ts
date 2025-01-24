@@ -94,4 +94,8 @@ export class ProductServiceService {
   sendPurchase(body:any): Observable<any>{
     return this.http.put<any>(Endpoints.PURCHASES.SEND_PURCHASE, {data:body});
   }
+
+  printPurchase(body:any): Observable<any>{
+    return this.http.post<any>(Endpoints.PURCHASES.PRINT_INVOICE, {data:body});
+  }
 }

@@ -66,6 +66,7 @@ export class ShoppingComponent implements OnInit {
   purchaseDeliveredSub: Subscription | undefined;
   purchaseHistorySub: Subscription | undefined;
   productSub: Subscription | undefined;
+  printInvoiceSub: Subscription | undefined;
 
   pendingPurchases: PendingPurchase[] | undefined;
   pendingPurchasesDelivered: PendingPurchase[] | undefined;
@@ -139,6 +140,26 @@ export class ShoppingComponent implements OnInit {
 
   purchase(){
     console.log("vamos a comprar!!");
+    let infoInvoice = {
+      "cliente": "Juan Pérez",
+      "productos": [
+        { "nombre": "Teclado", "precio": 50000 },
+        { "nombre": "Mouse", "precio": 25000 }
+      ],
+      "total": 75000
+    }
+    this.printInvoiceSub = this.productService.sendPurchase(infoInvoice).subscribe({
+      next:(data:any)=>{
+        console.log(data);
+      },
+      error: (err:any)=>{
+        console.log(err, "error");
+        return;
+      },
+      complete:()=>{
+        return;
+      }
+    });
   }
 
   getPurchasesPending(){
@@ -363,5 +384,6 @@ export class ShoppingComponent implements OnInit {
     this.purchaseSub?.unsubscribe();
     this.purchaseProdSub?.unsubscribe();
     this.productSub?.unsubscribe();
+    this.printInvoiceSub?.unsubscribe();
   }
 }
